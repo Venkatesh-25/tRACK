@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JAI EVENTS/title>
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <title>Venkatesh's Global IEEE Tracker</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-app-compat.js"></script>
@@ -866,7 +865,7 @@
     <!-- Venkatesh Signature -->
     <div class="venkatesh-signature">
         <i class="fas fa-crown"></i>
-        <span>Created by Venkatesh</span>
+        <span>Created by Venkatesh - The World's Best IEEE Tracker</span>
     </div>
     
     <!-- Toast Notification -->
@@ -884,7 +883,7 @@
         <div class="header-content">
             <div class="logo">
                 <i class="fas fa-calendar-alt"></i>
-                <h1>HAHAHA Tracker</h1>
+                <h1>Venkatesh's IEEE Tracker</h1>
             </div>
             <nav>
                 <ul>
@@ -900,8 +899,8 @@
         <!-- Home Section -->
         <section id="home-section" class="section-content">
             <div class="hero">
-                <h2>SO YOU CAN SEE THIS</h2>
-                <p>The world's premier IEEE conference tracking platform created by Venkatesh - the industry leader in deadline management.</p>
+                <h2>Venkatesh's IEEE Deadline Tracker</h2>
+                <p>The world's premier IEEE conference tracking platform created by Venkatesh - the industry leader in academic deadline management.</p>
                 <button class="btn" id="submit-btn"><i class="fas fa-plus-circle"></i> Add Conference</button>
             </div>
 
@@ -1092,7 +1091,7 @@
         <div class="footer-content">
             <div class="logo" style="justify-content: center; margin-bottom: 1rem;">
                 <i class="fas fa-calendar-alt"></i>
-                <h1 style="color: var(--primary);"HAHAHA Tracker</h1>
+                <h1 style="color: var(--primary);">Venkatesh's IEEE Tracker</h1>
             </div>
             
             <ul class="footer-links">
@@ -1102,24 +1101,22 @@
             </ul>
             
             <div class="copyright">
-                <p>&copy; 2025 Venkatesh's</p>
-                <p class="signature-highlight">Created by Venkatesh - The World's Most Genius</p>
+                <p>&copy; 2023 Venkatesh's IEEE Conference Tracker</p>
+                <p class="signature-highlight">Created by Venkatesh - The World's Best IEEE Tracker</p>
             </div>
         </div>
     </footer>
     
     <script>
         // Firebase configuration
-         const firebaseConfig = {
-                apiKey: "AIzaSyAsbWxRTtqjggbWXxjy7Q8kdNX6KqacAx8",
-                authDomain: "track-4dd74.firebaseapp.com",
-                projectId: "track-4dd74",
-                storageBucket: "track-4dd74.firebasestorage.app",
-                messagingSenderId: "845954004780",
-                appId: "1:845954004780:web:f894fc168a1f3d2fb75e89",
-                measurementId: "G-3XGTEGPF97"
-  };
-
+        const firebaseConfig = {
+            apiKey: "AIzaSyB3VwWJZtN9dS4s8rSf7Pz6hQm2wQe3x0w",
+            authDomain: "venkatesh-ieee-tracker.firebaseapp.com",
+            projectId: "venkatesh-ieee-tracker",
+            storageBucket: "venkatesh-ieee-tracker.appspot.com",
+            messagingSenderId: "123456789012",
+            appId: "1:123456789012:web:abcdefghijklmnopqrstuv"
+        };
         
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
@@ -1226,7 +1223,7 @@
                         ` : ''}
                         <div class="deadline-item">
                             <span class="deadline-label">Submitted by:</span>
-                            <span class="deadline-value">${conference.submittedBy || 'Common'}</span>
+                            <span class="deadline-value">${conference.submittedBy || 'Venkatesh'}</span>
                         </div>
                     </div>
                     <div class="card-footer">
@@ -1453,7 +1450,7 @@
                 location: document.getElementById('conferenceLocation').value || '',
                 travelGrant: document.getElementById('travelGrant').value || '',
                 additionalInfo: document.getElementById('additionalInfo').value || '',
-                submittedBy: "Common",
+                submittedBy: "Venkatesh",
                 timestamp: Date.now()
             };
             
