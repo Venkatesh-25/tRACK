@@ -1668,39 +1668,347 @@
         // Check deadlines and show notifications
         function checkDeadlines() {
             if (Notification.permission !== 'granted') return;
-            
+
             const today = new Date();
             today.setHours(0, 0, 0, 0);
-            
+
             // Load notification settings
             const settings = JSON.parse(localStorage.getItem('notificationSettings')) || {};
-            
+
             conferences.forEach(conf => {
-                if (!conf.submissionDeadline) return;
-                
-                const deadline = new Date(conf.submissionDeadline);
-                deadline.setHours(0, 0, 0, 0);
-                
-                const diffTime = deadline - today;
-                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                
-                // Skip if user has completed this conference
-                if (userCompleted[conf.id]) return;
-                
-                // Check if we should notify based on settings
-                if ((diffDays === 7 && settings.notify7days) || 
-                    (diffDays === 3 && settings.notify3days) || 
-                    (diffDays === 1 && settings.notify1day) ||
-                    (diffDays === 0 && settings.notifyDay)) {
-                    
-                    new Notification(`IEEE Deadline Approaching: ${conf.name}`, {
-                        body: `Submission deadline is in ${diffDays} day${diffDays > 1 ? 's' : ''} (${formatDate(conf.submissionDeadline)})`,
-                        icon: 'https://cdn-icons-png.flaticon.com/512/3063/3063188.png'
-                    });
-                }
+            if (!conf.submissionDeadline) return;
+
+            const deadline = new Date(conf.submissionDeadline);
+            deadline.setHours(0, 0, 0, 0);
+
+            const diffTime = deadline - today;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+            // Skip if user has completed this conference
+            if (userCompleted[conf.id]) return;
+
+            // Check if we should notify based on settings
+            if ((diffDays === 7 && settings.notify7days) || 
+                (diffDays === 3 && settings.notify3days) || 
+                (diffDays === 1 && settings.notify1day) ||
+                (diffDays === 0 && settings.notifyDay)) {
+
+                new Notification(`IEEE Deadline Approaching: ${conf.name}`, {
+                body: `Submission deadline is in ${diffDays} day${diffDays > 1 ? 's' : ''} (${formatDate(conf.submissionDeadline)})`,
+                icon: 'https://cdn-icons-png.flaticon.com/512/3063/3063188.png'
+                });
+            }
             });
         }
-        
+
+        // --- Customizations for your requests ---
+
+        // 1. Add favicon (inject into head if not present)
+        (function addFavicon() {
+            if (!document.querySelector('link[rel="icon"]')) {
+            const link = document.createElement('link');
+            link.rel = 'icon';
+            link.type = 'image/png';
+            link.href = 'https://cdn-icons-png.flaticon.com/512/3063/3063188.png';
+            document.head.appendChild(link);
+            }
+        })();
+
+        // 2. Home page: show upcoming application deadlines and upcoming conferences separately
+        function renderHomeConferences() {
+            homeConferenceGrid.innerHTML = '';
+
+            // Upcoming application deadlines (pending, not completed, deadline in future)
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            const upcomingDeadlines = conferences.filter(c =>
+            !userCompleted[c.id] &&
+            c.submissionDeadline &&
+            new Date(c.submissionDeadline) >= today
+            ).sort((a, b) => new Date(a.submissionDeadline) - new Date(b.submissionDeadline)).slice(0, 3);
+
+            // Upcoming conferences (conferenceDate in future, not completed)
+            const upcomingConfs = conferences.filter(c =>
+            !userCompleted[c.id] &&
+            c.conferenceDate &&
+            new Date(c.conferenceDate) >= today
+            ).sort((a, b) => new Date(a.conferenceDate) - new Date(b.conferenceDate)).slice(0, 3);
+
+            let html = '';
+
+            // Upcoming Application Deadlines
+            html += `<h3 style="margin-bottom:0.5rem;">Upcoming Application Deadlines</h3>`;
+            if (upcomingDeadlines.length === 0) {
+            html += `
+                <div style="text-align: center; padding: 1.5rem; background: white; border-radius: var(--border-radius); box-shadow: var(--shadow); margin-bottom:1.5rem;">
+                <i class="fas fa-calendar-plus" style="font-size: 2rem; color: var(--primary); margin-bottom: 0.5rem;"></i>
+                <div>No upcoming application deadlines</div>
+                </div>
+            `;
+            } else {
+            upcomingDeadlines.forEach(conference => {
+                html += generateConferenceCard(conference, true);
+            });
+            }
+
+            // Upcoming Conferences
+            html += `<h3 style="margin:1.5rem 0 0.5rem;">Upcoming Conferences</h3>`;
+            if (upcomingConfs.length === 0) {
+            html += `
+                <div style="text-align: center; padding: 1.5rem; background: white; border-radius: var(--border-radius); box-shadow: var(--shadow);">
+                <i class="fas fa-calendar" style="font-size: 2rem; color: var(--primary); margin-bottom: 0.5rem;"></i>
+                <div>No upcoming conferences</div>
+                </div>
+            `;
+            } else {
+            upcomingConfs.forEach(conference => {
+                html += generateConferenceCard(conference, true);
+            });
+            }
+
+            homeConferenceGrid.innerHTML = html;
+            addEventListeners();
+        }
+
+        // 3. Make home stats cards clickable as filter buttons
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.stat-card').forEach((card, idx) => {
+            card.style.cursor = 'pointer';
+            card.addEventListener('click', function() {
+                showSection('conferences');
+                // 0: Upcoming, 1: Grants, 2: Urgent
+                let tab = 'all';
+                if (idx === 1) tab = 'grants';
+                if (idx === 2) tab = '30days';
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelector(`.tab-btn[data-filter="${tab}"]`).classList.add('active');
+                renderConferences(tab, searchInput.value);
+            });
+            });
+        });
+
+        // 4. Add "Submitted By" input field (optional) in the form
+        (function addSubmittedByField() {
+            const form = document.getElementById('conferenceForm');
+            if (!document.getElementById('submittedBy')) {
+            const group = document.createElement('div');
+            group.className = 'form-group';
+            group.innerHTML = `
+                <label for="submittedBy">Submitted By (Optional)</label>
+                <input type="text" id="submittedBy" class="form-control" placeholder="Your name (optional)">
+            `;
+            // Insert before the last form-row (buttons)
+            const rows = form.querySelectorAll('.form-row');
+            form.insertBefore(group, rows[rows.length - 1]);
+            }
+        })();
+
+        // 5. In form submission, use user input for "Submitted By" if provided
+        function handleFormSubmit(e) {
+            e.preventDefault();
+
+            // Accept URLs without https/http
+            function normalizeUrl(url) {
+            if (!url) return '';
+            if (/^https?:\/\//i.test(url)) return url;
+            return 'https://' + url;
+            }
+
+            const newConference = {
+            name: document.getElementById('conferenceName').value,
+            registrationUrl: normalizeUrl(document.getElementById('registrationUrl').value),
+            website: normalizeUrl(document.getElementById('conferenceWebsite').value),
+            submissionDeadline: document.getElementById('submissionDeadline').value,
+            conferenceDate: document.getElementById('conferenceDate').value || '',
+            location: document.getElementById('conferenceLocation').value || '',
+            travelGrant: document.getElementById('travelGrant').value || '',
+            additionalInfo: document.getElementById('additionalInfo').value || '',
+            submittedBy: document.getElementById('submittedBy')?.value || "HAHAHA",
+            timestamp: Date.now()
+            };
+
+            if (editConferenceId) {
+            conferencesRef.doc(editConferenceId).update(newConference)
+                .then(() => {
+                showToast('Conference updated successfully!');
+                })
+                .catch(error => {
+                showToast('Error updating conference: ' + error.message, true);
+                });
+            } else {
+            conferencesRef.add(newConference)
+                .then(() => {
+                showToast('Conference added successfully!');
+                })
+                .catch(error => {
+                showToast('Error adding conference: ' + error.message, true);
+                });
+            }
+
+            conferenceForm.reset();
+            editConferenceId = null;
+            showSection('conferences');
+        }
+
+        // --- PWA Support: Allow install as app ---
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+            navigator.serviceWorker.register('sw.js').catch(() => {});
+            });
+        }
+        // Service Worker registration for PWA
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').catch(() => {});
+        }
+
+        // Show install prompt if available
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            // Add install button if not present
+            if (!document.getElementById('install-app-btn')) {
+            const btn = document.createElement('button');
+            btn.id = 'install-app-btn';
+            btn.className = 'btn';
+            btn.style.position = 'fixed';
+            btn.style.bottom = '100px';
+            btn.style.right = '30px';
+            btn.style.zIndex = 2000;
+            btn.innerHTML = '<i class="fas fa-download"></i> Install App';
+            btn.onclick = function() {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then(() => {
+                btn.remove();
+                });
+            };
+            document.body.appendChild(btn);
+            }
+        });
+
+        // Add manifest link for PWA
+        (function addManifest() {
+            if (!document.querySelector('link[rel="manifest"]')) {
+            const link = document.createElement('link');
+            link.rel = 'manifest';
+            link.href = 'manifest.json';
+            document.head.appendChild(link);
+            }
+        })();
+        /*
+        1. Fix logic for Upcoming Deadlines and Upcoming Conferences on home page:
+            - Upcoming Deadlines: show conferences where submissionDeadline is in the future and not completed.
+            - Upcoming Conferences: show conferences where conferenceDate is in the future and not completed, and submissionDeadline is in the past or not present.
+            - Each conference should appear in only one section.
+        */
+        function renderHomeConferences() {
+             homeConferenceGrid.innerHTML = '';
+
+             const today = new Date();
+             today.setHours(0, 0, 0, 0);
+
+             // Upcoming Deadlines: submissionDeadline in future, not completed
+             const upcomingDeadlines = conferences.filter(c =>
+                  !userCompleted[c.id] &&
+                  c.submissionDeadline &&
+                  new Date(c.submissionDeadline) >= today
+             ).sort((a, b) => new Date(a.submissionDeadline) - new Date(b.submissionDeadline));
+
+             // IDs of conferences already shown in deadlines
+             const deadlineIds = new Set(upcomingDeadlines.map(c => c.id));
+
+             // Upcoming Conferences: conferenceDate in future, not completed, and not in upcomingDeadlines
+             const upcomingConfs = conferences.filter(c =>
+                  !userCompleted[c.id] &&
+                  c.conferenceDate &&
+                  new Date(c.conferenceDate) >= today &&
+                  (!c.submissionDeadline || new Date(c.submissionDeadline) < today) &&
+                  !deadlineIds.has(c.id)
+             ).sort((a, b) => new Date(a.conferenceDate) - new Date(b.conferenceDate));
+
+             let html = '';
+
+             // Upcoming Application Deadlines
+             html += `<h3 style="margin-bottom:0.5rem;">Upcoming Application Deadlines</h3>`;
+             if (upcomingDeadlines.length === 0) {
+                  html += `
+                        <div style="text-align: center; padding: 1.5rem; background: white; border-radius: var(--border-radius); box-shadow: var(--shadow); margin-bottom:1.5rem;">
+                             <i class="fas fa-calendar-plus" style="font-size: 2rem; color: var(--primary); margin-bottom: 0.5rem;"></i>
+                             <div>No upcoming application deadlines</div>
+                        </div>
+                  `;
+             } else {
+                  upcomingDeadlines.slice(0, 3).forEach(conference => {
+                        html += generateConferenceCard(conference, true);
+                  });
+             }
+
+             // Upcoming Conferences
+             html += `<h3 style="margin:1.5rem 0 0.5rem;">Upcoming Conferences</h3>`;
+             if (upcomingConfs.length === 0) {
+                  html += `
+                        <div style="text-align: center; padding: 1.5rem; background: white; border-radius: var(--border-radius); box-shadow: var(--shadow);">
+                             <i class="fas fa-calendar" style="font-size: 2rem; color: var(--primary); margin-bottom: 0.5rem;"></i>
+                             <div>No upcoming conferences</div>
+                        </div>
+                  `;
+             } else {
+                  upcomingConfs.slice(0, 3).forEach(conference => {
+                        html += generateConferenceCard(conference, true);
+                  });
+             }
+
+             homeConferenceGrid.innerHTML = html;
+             addEventListeners();
+        }
+
+        /*
+        2. On phone devices, keep menu options in one line (no wrapping).
+            - Update CSS for nav ul and .footer-links for small screens.
+        */
+        const style = document.createElement('style');
+        style.innerHTML = `
+        @media (max-width: 480px) {
+             nav ul, .footer-links {
+                  flex-wrap: nowrap !important;
+                  overflow-x: auto;
+                  white-space: nowrap;
+                  justify-content: flex-start !important;
+                  width: 100%;
+                  margin-top: 0 !important;
+             }
+             nav ul li, .footer-links li {
+                  flex: 0 0 auto;
+             }
+        }
+        `;
+        document.head.appendChild(style);
+
+        /*
+        3. Move "Created by Venkatesh" signature to footer, remove fixed position.
+            - Remove .HAHAHA-signature from DOM and add to footer.
+        */
+        document.addEventListener('DOMContentLoaded', function() {
+             // Remove floating signature if present
+             const sig = document.querySelector('.HAHAHA-signature');
+             if (sig) sig.parentNode.removeChild(sig);
+
+             // Add to footer if not already present
+             const footer = document.querySelector('.footer-content');
+             if (footer && !footer.querySelector('.HAHAHA-signature-footer')) {
+                  const div = document.createElement('div');
+                  div.className = 'HAHAHA-signature-footer';
+                  div.style.marginTop = '1.5rem';
+                  div.style.display = 'flex';
+                  div.style.justifyContent = 'center';
+                  div.style.alignItems = 'center';
+                  div.style.gap = '8px';
+                  div.innerHTML = `<i class="fas fa-crown" style="color:var(--primary);"></i>
+                        <span style="font-weight:600;color:var(--primary);">⚡Created by Venkatesh - The Best in World⚡</span>`;
+                  footer.appendChild(div);
+             }
+        });
         // Initialize when DOM is loaded
         document.addEventListener('DOMContentLoaded', initApp);
     </script>
