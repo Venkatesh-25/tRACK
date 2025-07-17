@@ -6,9 +6,11 @@
     <title>HAHAHA Tracker</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/3063/3063188.png">
     <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-firestore-compat.js"></script>
     <style>
+        /* --- Combined CSS from both files, deduplicated --- */
         :root {
             --primary: #00629b;
             --primary-light: #e6f2f9;
@@ -25,13 +27,7 @@
             --transition: all 0.3s ease;
             --border-radius: 12px;
         }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #f8fafc;
@@ -41,56 +37,33 @@
             background-image: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
             padding-bottom: 2rem;
         }
-        
-        h1, h2, h3, h4 {
-            font-weight: 600;
-            color: var(--dark);
-        }
-        
-        /* Header Styles */
+        h1, h2, h3, h4 { font-weight: 600; color: var(--dark); }
         header {
-            padding: 0.8rem 2rem;
+            padding: 0.8rem 1rem;
             position: sticky;
             top: 0;
             z-index: 100;
             background: rgba(255, 255, 255, 0.95);
             box-shadow: var(--shadow);
-            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
         }
-        
         .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
+            width: 100%;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-end;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
+            gap: 10px;
         }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        .logo i {
-            font-size: 2.2rem;
-            color: var(--primary);
-        }
-        
-        .logo h1 {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-        
+        .logo { display: none !important; }
+        .logo i { font-size: 2.2rem; color: var(--primary); }
+        .logo h1 { font-size: 1.6rem; font-weight: 700; color: var(--primary); }
         nav ul {
             display: flex;
             list-style: none;
             gap: 15px;
         }
-        
         nav a {
             color: var(--gray);
             text-decoration: none;
@@ -100,20 +73,15 @@
             transition: var(--transition);
             font-size: 0.95rem;
         }
-        
         nav a:hover, nav a.active {
             background: var(--primary-light);
             color: var(--primary);
         }
-        
-        /* Main Container */
         .container {
             max-width: 1200px;
             margin: 2rem auto;
             padding: 0 1.5rem;
         }
-        
-        /* Hero Section */
         .hero {
             text-align: center;
             padding: 3rem 2rem;
@@ -124,7 +92,6 @@
             position: relative;
             overflow: hidden;
         }
-        
         .hero:before {
             content: "";
             position: absolute;
@@ -134,20 +101,17 @@
             height: 5px;
             background: var(--warning);
         }
-        
         .hero h2 {
             font-size: 2.5rem;
             margin-bottom: 1rem;
             line-height: 1.3;
         }
-        
         .hero p {
             font-size: 1.1rem;
             max-width: 800px;
             margin: 0 auto 2rem;
             opacity: 0.9;
         }
-        
         .btn {
             padding: 12px 28px;
             border: none;
@@ -163,13 +127,10 @@
             color: var(--primary);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
-        
         .btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         }
-        
-        /* Home Stats */
         .home-stats {
             display: flex;
             justify-content: center;
@@ -177,7 +138,6 @@
             margin: 2rem 0;
             flex-wrap: wrap;
         }
-        
         .stat-card {
             padding: 1.5rem;
             text-align: center;
@@ -187,20 +147,16 @@
             border-top: 4px solid var(--primary);
             min-width: 200px;
         }
-        
         .stat-value {
             font-size: 2.5rem;
             font-weight: 700;
             color: var(--primary);
             margin: 10px 0;
         }
-        
         .stat-label {
             color: var(--gray);
             font-size: 0.95rem;
         }
-        
-        /* Section Titles */
         .section-title {
             margin: 3rem 0 1.5rem;
             color: var(--dark);
@@ -210,7 +166,6 @@
             align-items: center;
             gap: 12px;
         }
-        
         .section-title:after {
             content: '';
             flex: 1;
@@ -218,7 +173,6 @@
             background: linear-gradient(90deg, var(--primary), transparent);
             margin-left: 15px;
         }
-        
         .section-title i {
             background: var(--primary);
             color: white;
@@ -229,8 +183,6 @@
             align-items: center;
             justify-content: center;
         }
-        
-        /* Tabs */
         .tabs {
             display: flex;
             flex-wrap: wrap;
@@ -241,7 +193,6 @@
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
         }
-        
         .tab-btn {
             padding: 8px 20px;
             background: var(--light-gray);
@@ -253,20 +204,16 @@
             font-size: 0.9rem;
             color: var(--gray);
         }
-        
         .tab-btn.active {
             background: var(--primary);
             color: white;
             border-color: transparent;
         }
-        
-        /* Search Box */
         .search-container {
             display: flex;
             margin-bottom: 1.5rem;
             gap: 10px;
         }
-        
         .search-box {
             flex: 1;
             padding: 12px 18px;
@@ -277,20 +224,16 @@
             background: white;
             color: var(--dark);
         }
-        
         .search-box:focus {
             border-color: var(--primary);
             outline: none;
             box-shadow: 0 0 0 3px rgba(0, 98, 155, 0.1);
         }
-        
-        /* Conference List */
         .conference-list {
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
         }
-        
         .conference-card {
             overflow: hidden;
             transition: var(--transition);
@@ -302,35 +245,31 @@
             box-shadow: var(--shadow);
             border-top: 4px solid var(--primary);
         }
-        
         .conference-card.completed {
             opacity: 0.8;
             border-top: 4px solid var(--gray);
         }
-        
         .conference-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
-        
         .card-header {
             padding: 1.2rem 1.2rem 0.5rem;
             position: relative;
         }
-        
         .card-header h3 {
             font-size: 1.3rem;
-            color: var(--dark);
+            color: #00629b;
             margin-bottom: 0.5rem;
             padding-right: 100px;
+            font-weight: 700;
+            letter-spacing: 0.01em;
         }
-        
         .conference-additional {
             color: var(--gray);
             font-size: 0.9rem;
             margin-bottom: 0.5rem;
         }
-        
         .conference-status {
             position: absolute;
             top: 1rem;
@@ -342,17 +281,14 @@
             font-size: 0.8rem;
             font-weight: 500;
         }
-        
         .conference-status.completed {
             background: var(--light-gray);
             color: var(--gray);
         }
-        
         .card-body {
             padding: 0 1.5rem 1.5rem;
             flex-grow: 1;
         }
-        
         .deadline-item {
             display: flex;
             justify-content: space-between;
@@ -360,22 +296,9 @@
             border-bottom: 1px solid var(--border);
             font-size: 0.95rem;
         }
-        
-        .deadline-item:last-child {
-            border-bottom: none;
-        }
-        
-        .deadline-label {
-            font-weight: 500;
-            color: var(--gray);
-        }
-        
-        .deadline-value {
-            font-weight: 600;
-            text-align: right;
-            color: var(--dark);
-        }
-        
+        .deadline-item:last-child { border-bottom: none; }
+        .deadline-label { font-weight: 500; color: var(--gray); }
+        .deadline-value { font-weight: 600; text-align: right; color: var(--dark); }
         .card-footer {
             padding: 1rem;
             background: var(--light-gray);
@@ -385,7 +308,6 @@
             gap: 10px;
             border-top: 1px solid var(--border);
         }
-        
         .card-footer a {
             text-decoration: none;
             color: var(--primary);
@@ -401,12 +323,10 @@
             background: white;
             border: 1px solid var(--border);
         }
-        
         .card-footer a:hover {
             color: var(--secondary);
             border-color: var(--primary);
         }
-        
         .action-btn {
             background: none;
             border: none;
@@ -423,23 +343,18 @@
             background: white;
             border: 1px solid var(--border);
         }
-        
         .action-btn:hover {
             color: var(--secondary);
             border-color: var(--primary);
         }
-        
         .action-btn.delete-btn {
             color: var(--danger);
             border-color: rgba(229, 62, 62, 0.2);
         }
-        
         .action-btn.delete-btn:hover {
             color: #c53030;
             border-color: var(--danger);
         }
-        
-        /* Form Container */
         .form-container {
             padding: 2rem;
             max-width: 800px;
@@ -448,11 +363,7 @@
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
         }
-        
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        
+        .form-group { margin-bottom: 1.5rem; }
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
@@ -460,7 +371,6 @@
             font-size: 0.95rem;
             color: var(--dark);
         }
-        
         .form-control {
             width: 100%;
             padding: 12px 18px;
@@ -471,36 +381,27 @@
             background: white;
             color: var(--dark);
         }
-        
         .form-control:focus {
             border-color: var(--primary);
             outline: none;
             box-shadow: 0 0 0 3px rgba(0, 98, 155, 0.1);
         }
-        
         .form-row {
             display: flex;
             gap: 20px;
             margin-bottom: 1.5rem;
         }
-        
-        .form-col {
-            flex: 1;
-        }
-        
-        /* Footer */
+        .form-col { flex: 1; }
         footer {
             padding: 3rem 0;
             margin-top: 3rem;
             text-align: center;
         }
-        
         .footer-content {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 1.5rem;
         }
-        
         .footer-links {
             list-style: none;
             display: flex;
@@ -509,24 +410,18 @@
             margin: 20px 0;
             flex-wrap: wrap;
         }
-        
         .footer-links a {
             color: var(--gray);
             text-decoration: none;
             transition: var(--transition);
             font-size: 0.95rem;
         }
-        
-        .footer-links a:hover {
-            color: var(--primary);
-        }
-        
+        .footer-links a:hover { color: var(--primary); }
         .copyright {
             padding-top: 2rem;
             color: var(--gray);
             font-size: 0.9rem;
         }
-        
         .signature-highlight {
             background: linear-gradient(90deg, #00629b, #9e1b32);
             -webkit-background-clip: text;
@@ -535,13 +430,10 @@
             font-size: 1.1rem;
             animation: signaturePulse 2s infinite alternate;
         }
-        
         @keyframes signaturePulse {
             0% { opacity: 0.9; transform: scale(1); }
             100% { opacity: 1; transform: scale(1.02); }
         }
-        
-        /* Toast Notification */
         .toast {
             position: fixed;
             bottom: 20px;
@@ -560,25 +452,17 @@
             z-index: 1000;
             border-left: 4px solid var(--success);
         }
-        
         .toast.show {
             transform: translateY(0);
             opacity: 1;
         }
-        
-        .toast.error {
-            border-left-color: var(--danger);
-        }
-        
-        /* Home Conferences */
+        .toast.error { border-left-color: var(--danger); }
         .home-conferences {
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
             margin: 2rem 0;
         }
-        
-        /* Floating Button */
         .fab {
             position: fixed;
             bottom: 30px;
@@ -596,17 +480,11 @@
             z-index: 100;
             transition: var(--transition);
         }
-        
         .fab:hover {
             transform: translateY(-5px) scale(1.05);
             background: var(--secondary);
         }
-        
-        .fab i {
-            font-size: 1.5rem;
-        }
-        
-        /* Notification Settings */
+        .fab i { font-size: 1.5rem; }
         .notification-settings {
             background: white;
             padding: 1.5rem;
@@ -614,27 +492,19 @@
             box-shadow: var(--shadow);
             margin-top: 2rem;
         }
-        
         .notification-row {
             display: flex;
             align-items: center;
             gap: 15px;
             margin: 1rem 0;
         }
-        
         .switch {
             position: relative;
             display: inline-block;
             width: 50px;
             height: 24px;
         }
-        
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        
+        .switch input { opacity: 0; width: 0; height: 0; }
         .slider {
             position: absolute;
             cursor: pointer;
@@ -646,7 +516,6 @@
             transition: .4s;
             border-radius: 24px;
         }
-        
         .slider:before {
             position: absolute;
             content: "";
@@ -658,22 +527,13 @@
             transition: .4s;
             border-radius: 50%;
         }
-        
-        input:checked + .slider {
-            background-color: var(--primary);
-        }
-        
-        input:checked + .slider:before {
-            transform: translateX(26px);
-        }
-        
-        /* Loading Indicator */
+        input:checked + .slider { background-color: var(--primary); }
+        input:checked + .slider:before { transform: translateX(26px); }
         .loading {
             display: flex;
             justify-content: center;
             padding: 2rem;
         }
-        
         .loading-spinner {
             width: 50px;
             height: 50px;
@@ -682,219 +542,375 @@
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
-        
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        
-        /* Button Group */
-        .btn-group {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
+        .btn-group { display: flex; gap: 10px; flex-wrap: wrap; }
+        .action-group { display: flex; flex-wrap: wrap; gap: 8px; }
+        .link-group { display: flex; flex-wrap: wrap; gap: 8px; }
+        /* --- Dark mode variables and overrides --- */
+        body.dark-mode {
+            --primary: #b388ff;
+            --primary-light: #2d2350;
+            --secondary: #ffb300;
+            --light: #2d2350;
+            --dark: #f3eaff;
+            --gray: #bdb6d8;
+            --light-gray: #231942;
+            --border: #3c2e5a;
+            --success: #81c784;
+            --warning: #ffb74d;
+            --danger: #ff5370;
+            background-color: #1a1333 !important;
+            color: var(--dark) !important;
+            background-image: none !important;
         }
-        
-        /* Action Group */
-        .action-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
+        body.dark-mode header {
+            background: #231942 !important;
+            color: var(--primary) !important;
+            box-shadow: 0 4px 20px #b388ff33;
+            border-bottom: 2px solid #b388ff;
         }
-        
-        /* Link Group */
-        .link-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
+        body.dark-mode .header-content .logo h1,
+        body.dark-mode .header-content .logo i {
+            color: #b388ff !important;
         }
-        
-        /* HAHAHA Signature */
-        .HAHAHA-signature {
+        body.dark-mode nav a {
+            color: #bdb6d8 !important;
+        }
+        body.dark-mode nav a.active,
+        body.dark-mode nav a:hover {
+            background: #2d2350 !important;
+            color: #ffb300 !important;
+        }
+        body.dark-mode .fab {
+            background: #b388ff !important;
+            color: #231942 !important;
+            box-shadow: 0 0 20px 2px #b388ff55;
+        }
+        body.dark-mode .fab:hover {
+            background: #ffb300 !important;
+            color: #231942 !important;
+        }
+        body.dark-mode .btn,
+        body.dark-mode .tab-btn,
+        body.dark-mode .action-btn,
+        body.dark-mode .card-footer a {
+            background: #2d2350 !important;
+            color: #b388ff !important;
+            border: 1.5px solid #b388ff !important;
+            box-shadow: 0 2px 12px #b388ff33;
+            transition: all 0.2s;
+        }
+        body.dark-mode .btn:hover,
+        body.dark-mode .tab-btn:hover,
+        body.dark-mode .action-btn:hover,
+        body.dark-mode .card-footer a:hover {
+            background: #b388ff !important;
+            color: #231942 !important;
+            box-shadow: 0 4px 20px #ffb30044;
+        }
+        body.dark-mode .conference-card,
+        body.dark-mode .form-container,
+        body.dark-mode .notification-settings,
+        body.dark-mode .tabs,
+        body.dark-mode .stat-card,
+        body.dark-mode .card-footer,
+        body.dark-mode .loading,
+        body.dark-mode .conference-list > div,
+        body.dark-mode .home-conferences > div {
+            background: #2d2350 !important;
+            color: var(--dark) !important;
+            box-shadow: 0 4px 24px #b388ff33 !important;
+        }
+        body.dark-mode .conference-status,
+        body.dark-mode .conference-status.completed {
+            background: #231942 !important;
+            color: #ffb300 !important;
+        }
+        body.dark-mode .stat-value {
+            color: #b388ff !important;
+        }
+        body.dark-mode .stat-label {
+            color: #bdb6d8 !important;
+        }
+        body.dark-mode .deadline-label {
+            color: #bdb6d8 !important;
+        }
+        body.dark-mode .conference-additional {
+            color: #bdb6d8 !important;
+        }
+        body.dark-mode .card-header h3 {
+            color: #ffb300 !important;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+        }
+        body.dark-mode .deadline-value.urgent {
+            color: #ff5370 !important;
+            font-weight: 700;
+        }
+        body.dark-mode .deadline-value.warning {
+            color: #ffb74d !important;
+            font-weight: 700;
+        }
+        body.dark-mode .deadline-value.safe {
+            color: #81c784 !important;
+            font-weight: 700;
+        }
+        body.dark-mode .deadline-value.completed {
+            color: #bdb6d8 !important;
+            font-weight: 700;
+        }
+        .card-header h3 { color: #00629b; font-weight: 700; letter-spacing: 0.01em; }
+        .deadline-value.urgent { color: #e53e3e; font-weight: 700; }
+        .deadline-value.warning { color: #ff9800; font-weight: 700; }
+        .deadline-value.safe { color: #38a169; font-weight: 700; }
+        .deadline-value.completed { color: #718096; font-weight: 700; }
+        .btn.submit-btn, .action-btn.mark-completed {
+            background: #38a169 !important;
+            color: #fff !important;
+            border: none !important;
+        }
+        .btn.submit-btn:hover, .action-btn.mark-completed:hover {
+            background: #2f855a !important;
+            color: #fff !important;
+        }
+        .btn.cancel-btn, .action-btn.delete-btn {
+            background: #e53e3e !important;
+            color: #fff !important;
+            border: none !important;
+        }
+        .btn.cancel-btn:hover, .action-btn.delete-btn:hover {
+            background: #c53030 !important;
+            color: #fff !important;
+        }
+        .action-btn.copy-btn {
+            background: #3182ce !important;
+            color: #fff !important;
+            border: none !important;
+        }
+        .action-btn.copy-btn:hover {
+            background: #225ea8 !important;
+            color: #fff !important;
+        }
+        body.dark-mode .btn.submit-btn, body.dark-mode .action-btn.mark-completed {
+            background: #81c784 !important;
+            color: #231942 !important;
+        }
+        body.dark-mode .btn.submit-btn:hover, body.dark-mode .action-btn.mark-completed:hover {
+            background: #388e3c !important;
+            color: #fff !important;
+        }
+        body.dark-mode .btn.cancel-btn, body.dark-mode .action-btn.delete-btn {
+            background: #ff5370 !important;
+            color: #231942 !important;
+        }
+        body.dark-mode .btn.cancel-btn:hover, body.dark-mode .action-btn.delete-btn:hover {
+            background: #c53030 !important;
+            color: #fff !important;
+        }
+        body.dark-mode .action-btn.copy-btn {
+            background: #82aaff !important;
+            color: #231942 !important;
+        }
+        body.dark-mode .action-btn.copy-btn:hover {
+            background: #225ea8 !important;
+            color: #fff !important;
+        }
+        .bottom-nav {
             position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background: rgba(0, 98, 155, 0.9);
-            color: white;
-            padding: 8px 15px;
-            border-radius: 30px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            z-index: 100;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 60px;
+            background: #fff;
+            box-shadow: 0 -2px 16px #0002;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 2000;
+            border-top: 1px solid var(--border);
+        }
+        .bottom-nav .nav-link {
+            flex: 1;
+            text-align: center;
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 1.1rem;
+            background: none;
+            border: none;
+            outline: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            padding: 0;
+            height: 100%;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .bottom-nav .nav-link.active,
+        .bottom-nav .nav-link:hover {
+            color: var(--primary);
+        }
+        .bottom-nav .nav-link span {
+            font-size: 0.8rem;
+            margin-top: 2px;
+        }
+        .bottom-nav .mode-toggle-btn {
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            background: #f7fafc;
+            color: #a259ff;
+            box-shadow: 0 2px 8px #0001;
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: center;
+            font-size: 1.3rem;
+            margin: 0 4px;
+            transition: background 0.2s, color 0.2s;
+            border: none;
+            outline: none;
+            cursor: pointer;
         }
-        
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .header-content {
+        .bottom-nav .mode-toggle-btn:hover {
+            background: #a259ff;
+            color: #fff;
+        }
+        body.dark-mode .bottom-nav {
+            background: #231942 !important;
+            border-top: 1.5px solid #b388ff;
+        }
+        body.dark-mode .bottom-nav .nav-link {
+            color: #bdb6d8 !important;
+        }
+        body.dark-mode .bottom-nav .nav-link.active,
+        body.dark-mode .bottom-nav .nav-link:hover {
+            color: #ffb300 !important;
+        }
+        body.dark-mode .bottom-nav .mode-toggle-btn {
+            background: #2d2350;
+            color: #ffd600;
+        }
+        body.dark-mode .bottom-nav .mode-toggle-btn:hover {
+            background: #ffd600;
+            color: #2d2350;
+        }
+        @media (max-width: 600px) {
+            .header-content, header {
                 flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
+                justify-content: flex-end;
+                padding: 0.5rem 0.5rem;
             }
-            
-            .logo {
-                width: auto;
-                justify-content: flex-start;
+            .dark-toggle-btn {
+                top: 10px;
+                right: 10px;
+                width: 38px;
+                height: 38px;
+                font-size: 1.1rem;
             }
-            
-            nav ul {
-                flex-wrap: wrap;
-                justify-content: center;
-                margin-top: 15px;
+            nav ul { gap: 5px; }
+            .btn, .action-btn, .tab-btn {
+                font-size: 0.95rem;
+                padding: 10px 12px;
             }
-            
-            .form-row {
-                flex-direction: column;
-                gap: 0;
+            .bottom-nav { height: 54px; }
+            .bottom-nav .nav-link span { font-size: 0.75rem; }
+            .bottom-nav .mode-toggle-btn {
+                width: 38px;
+                height: 38px;
+                font-size: 1.1rem;
             }
-            
-            .hero h2 {
-                font-size: 2rem;
-            }
-            
-            .hero p {
-                font-size: 1rem;
-            }
-            
-            .section-title {
-                font-size: 1.5rem;
-            }
-            
-            .home-stats {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .stat-card {
-                width: 100%;
-            }
-            
-            .card-footer {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 12px;
-            }
-            
-            .card-header h3 {
-                padding-right: 0;
-            }
-            
-            .conference-status {
-                position: static;
-                margin-top: 10px;
-                width: fit-content;
-            }
-            
-            .link-group, .action-group {
-                width: 100%;
-            }
-            
-            .link-group {
-                justify-content: center;
-                border-bottom: 1px solid var(--border);
-                padding-bottom: 12px;
-                margin-bottom: 8px;
-            }
-            
-            .action-group {
-                justify-content: center;
-            }
-            
-            .HAHAHA-signature {
-                bottom: 80px;
+        }
+        @media (min-width: 900px) {
+            .bottom-nav {
+                max-width: 500px;
                 left: 50%;
                 transform: translateX(-50%);
-                width: max-content;
+                border-radius: 18px 18px 0 0;
             }
         }
-        
-        @media (max-width: 480px) {
-            .header-content {
-                flex-wrap: wrap;
-            }
-            
-            .logo {
-                width: 100%;
-                justify-content: center;
-                margin-bottom: 10px;
-            }
-            
-            nav ul {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .tabs {
-                gap: 5px;
-            }
-            
-            .tab-btn {
-                padding: 8px 12px;
-                font-size: 0.85rem;
-            }
-            
-            .footer-links {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .fab {
-                bottom: 20px;
-                right: 20px;
-                width: 50px;
-                height: 50px;
-            }
-            
-            .card-footer a, .action-btn {
-                font-size: 0.85rem;
-                padding: 8px 10px;
-                flex: 1;
-                text-align: center;
-                justify-content: center;
-            }
-            
-            .card-footer .action-group {
-                gap: 6px;
-            }
+        .mode-toggle-btn {
+            position: relative;
+            background: none;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 0;
+            margin: 0 4px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-width: 44px;
+            min-height: 44px;
+            transition: background 0.2s;
         }
+        .mode-toggle-btn .toggle-icon {
+            position: relative;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .mode-toggle-btn .fa-moon,
+        .mode-toggle-btn .fa-sun {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 28px;
+            height: 28px;
+            font-size: 1.4rem;
+            transition: opacity 0.3s, transform 0.3s;
+            color: #a259ff;
+        }
+        .mode-toggle-btn .fa-sun {
+            color: #ffb300;
+            opacity: 0;
+            transform: scale(0.7) rotate(-30deg);
+        }
+        body.dark-mode .mode-toggle-btn .fa-moon {
+            opacity: 0;
+            transform: scale(0.7) rotate(30deg);
+        }
+        body.dark-mode .mode-toggle-btn .fa-sun {
+            opacity: 1;
+            transform: scale(1) rotate(0deg);
+        }
+        body:not(.dark-mode) .mode-toggle-btn .fa-moon {
+            opacity: 1;
+            transform: scale(1) rotate(0deg);
+        }
+        body:not(.dark-mode) .mode-toggle-btn .fa-sun {
+            opacity: 0;
+            transform: scale(0.7) rotate(-30deg);
+        }
+        .mode-toggle-btn:focus { outline: 2px solid #a259ff; }
+        .mode-toggle-btn:hover {
+            background: #f7fafc;
+            border-radius: 50%;
+        }
+        body.dark-mode .mode-toggle-btn:hover { background: #2d2350; }
     </style>
 </head>
 <body>
-    <!-- HAHAHA Signature -->
-    <div class="HAHAHA-signature">
-        <i class="fas fa-crown"></i>
-        <span>⚡Created by Venkatesh - The Best in Wolrd ⚡</span>
-    </div>
-    
     <!-- Toast Notification -->
     <div class="toast" id="toast">
         <i class="fas fa-check-circle"></i>
         <span id="toast-message">Conference added successfully!</span>
     </div>
-    
     <!-- Floating Action Button -->
     <div class="fab" id="fab">
         <i class="fas fa-plus"></i>
     </div>
-    
+    <!-- Header -->
     <header>
-        <div class="header-content">
-            <div class="logo">
-                <i class="fas fa-calendar-alt"></i>
-                <h1>HAHAHA's Tracker</h1>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="#" class="active" data-section="home">Home</a></li>
-                    <li><a href="#" data-section="conferences">Conferences</a></li>
-                    <li><a href="#" data-section="notifications">Notifications</a></li>
-                </ul>
-            </nav>
-        </div>
+        <div class="header-content"></div>
     </header>
-
     <div class="container">
         <!-- Home Section -->
         <section id="home-section" class="section-content">
@@ -903,7 +919,6 @@
                 <p>The world's premier Conference tracking platform created by Venkatesh - the great in deadline management.</p>
                 <button class="btn" id="submit-btn"><i class="fas fa-plus-circle"></i> Add Conference</button>
             </div>
-
             <div class="home-stats">
                 <div class="stat-card">
                     <div class="stat-value" id="upcoming-count">0</div>
@@ -918,31 +933,26 @@
                     <div class="stat-label">Urgent Deadlines</div>
                 </div>
             </div>
-
             <h2 class="section-title">
                 <i class="fas fa-clock"></i>
                 Upcoming Deadlines
             </h2>
-            
             <div class="home-conferences" id="home-conference-grid">
                 <div class="loading">
                     <div class="loading-spinner"></div>
                 </div>
             </div>
         </section>
-
         <!-- Conferences Section -->
         <section id="conferences-section" class="section-content" style="display:none">
             <h2 class="section-title">
                 <i class="fas fa-calendar"></i>
                 Conference Deadlines
             </h2>
-            
             <div class="search-container">
                 <input type="text" id="search-input" class="search-box" placeholder="Search conferences...">
                 <button class="btn" id="search-btn"><i class="fas fa-search"></i></button>
             </div>
-            
             <div class="tabs">
                 <button class="tab-btn active" data-filter="all">All Conferences</button>
                 <button class="tab-btn" data-filter="month">This Month</button>
@@ -950,43 +960,36 @@
                 <button class="tab-btn" data-filter="grants">With Travel Grants</button>
                 <button class="tab-btn" data-filter="completed">Completed</button>
             </div>
-            
             <div class="conference-list" id="conference-grid">
                 <div class="loading">
                     <div class="loading-spinner"></div>
                 </div>
             </div>
         </section>
-
         <!-- Submit Section -->
         <section id="submit-section" class="section-content" style="display:none">
             <h2 class="section-title">
                 <i class="fas fa-plus"></i>
                 Add a Conference
             </h2>
-            
             <div class="form-container">
                 <form id="conferenceForm">
                     <div class="form-group">
                         <label for="conferenceName">Conference Name *</label>
                         <input type="text" id="conferenceName" class="form-control" placeholder="e.g., IEEE International Conference on Communications" required>
                     </div>
-                    
                     <div class="form-group">
                         <label for="registrationUrl">Registration URL *</label>
                         <input type="url" id="registrationUrl" class="form-control" placeholder="http://registration.example.com" required>
                     </div>
-                    
                     <div class="form-group">
                         <label for="conferenceWebsite">Conference Website (Optional)</label>
                         <input type="url" id="conferenceWebsite" class="form-control" placeholder="http://example.com">
                     </div>
-                    
                     <div class="form-group">
                         <label for="submissionDeadline">Submission Deadline *</label>
                         <input type="date" id="submissionDeadline" class="form-control" required>
                     </div>
-                    
                     <div class="form-row">
                         <div class="form-col">
                             <div class="form-group">
@@ -1001,39 +1004,37 @@
                             </div>
                         </div>
                     </div>
-                    
                     <div class="form-group">
                         <label for="travelGrant">Travel Grant Information</label>
                         <input type="text" id="travelGrant" class="form-control" placeholder="Amount, eligibility, etc.">
                     </div>
-                    
                     <div class="form-group">
                         <label for="additionalInfo">Additional Information</label>
                         <textarea id="additionalInfo" class="form-control" rows="3" placeholder="Any other relevant details"></textarea>
                     </div>
-                    
+                    <div class="form-group">
+                        <label for="submittedBy">Submitted By (Optional)</label>
+                        <input type="text" id="submittedBy" class="form-control" placeholder="Your name (optional)">
+                    </div>
                     <div class="form-row">
-                        <button type="submit" class="btn" style="flex: 1; padding: 15px; font-size: 1.1rem;">
+                        <button type="submit" class="btn submit-btn" style="flex: 1;">
                             <i class="fas fa-paper-plane"></i> Submit Conference
                         </button>
-                        <button type="button" class="btn" id="cancel-btn" style="flex: 1; padding: 15px; font-size: 1.1rem; background: var(--light-gray); color: var(--gray);">
+                        <button type="button" class="btn cancel-btn" id="cancel-btn" style="flex: 1;">
                             <i class="fas fa-times"></i> Cancel
                         </button>
                     </div>
                 </form>
             </div>
         </section>
-
         <!-- Notifications Section -->
         <section id="notifications-section" class="section-content" style="display:none">
             <h2 class="section-title">
                 <i class="fas fa-bell"></i>
                 Notification Settings
             </h2>
-            
             <div class="notification-settings">
                 <p>Set up notifications to stay informed about upcoming deadlines:</p>
-                
                 <div class="notification-row">
                     <div class="switch">
                         <input type="checkbox" id="notify-7days" checked>
@@ -1041,7 +1042,6 @@
                     </div>
                     <label for="notify-7days">Notify me 7 days before deadline</label>
                 </div>
-                
                 <div class="notification-row">
                     <div class="switch">
                         <input type="checkbox" id="notify-3days" checked>
@@ -1049,7 +1049,6 @@
                     </div>
                     <label for="notify-3days">Notify me 3 days before deadline</label>
                 </div>
-                
                 <div class="notification-row">
                     <div class="switch">
                         <input type="checkbox" id="notify-1day" checked>
@@ -1057,7 +1056,6 @@
                     </div>
                     <label for="notify-1day">Notify me 1 day before deadline</label>
                 </div>
-                
                 <div class="notification-row">
                     <div class="switch">
                         <input type="checkbox" id="notify-day" checked>
@@ -1065,7 +1063,6 @@
                     </div>
                     <label for="notify-day">Notify me on deadline day</label>
                 </div>
-                
                 <div class="notification-row">
                     <div class="switch">
                         <input type="checkbox" id="travel-notify">
@@ -1073,11 +1070,9 @@
                     </div>
                     <label for="travel-notify">Notify me about travel grant deadlines</label>
                 </div>
-                
                 <button class="btn" id="save-notifications" style="margin-top: 1.5rem; width: 100%; padding: 15px; font-size: 1.1rem;">
                     <i class="fas fa-save"></i> Save Settings
                 </button>
-                
                 <div class="notification-info" style="margin-top: 2rem; padding: 1rem; background: var(--light-gray); border-radius: var(--border-radius);">
                     <h3><i class="fas fa-info-circle"></i> Notification Information</h3>
                     <p style="margin-top: 0.5rem;">Notifications will appear in your browser when deadlines approach. Please ensure your browser allows notifications from this site.</p>
@@ -1086,50 +1081,53 @@
             </div>
         </section>
     </div>
-    
     <footer>
         <div class="footer-content">
             <div class="logo" style="justify-content: center; margin-bottom: 1rem;">
                 <i class="fas fa-calendar-alt"></i>
                 <h1 style="color: var(--primary);">HAHAHA's Tracker</h1>
             </div>
-            
             <ul class="footer-links">
                 <li><a href="#" data-section="home">Home</a></li>
                 <li><a href="#" data-section="conferences">Conferences</a></li>
                 <li><a href="#" data-section="notifications">Notifications</a></li>
             </ul>
-            
             <div class="copyright">
                 <p>&copy; 2025 HAHAHA Tracker</p>
                 <p class="signature-highlight">🔥Created by Venkatesh🔥</p>
+                <p class="signature-highlight" style="font-size:1rem;">⚡The Best in World⚡</p>
             </div>
         </div>
     </footer>
-    
+    <!-- Bottom Navigation (with modern dark mode toggle) -->
+    <nav class="bottom-nav">
+        <a href="#" class="nav-link" data-section="home"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="#" class="nav-link" data-section="conferences"><i class="fas fa-calendar-alt"></i><span>Conferences</span></a>
+        <a href="#" class="nav-link" data-section="notifications"><i class="fas fa-bell"></i><span>Notifications</span></a>
+        <button class="nav-link mode-toggle-btn" id="dark-toggle-btn" title="Toggle dark mode" aria-label="Toggle dark mode">
+            <span class="toggle-icon">
+                <i class="fas fa-moon"></i>
+                <i class="fas fa-sun"></i>
+            </span>
+        </button>
+    </nav>
     <script>
         // Firebase configuration
         const firebaseConfig = {
-  apiKey: "AIzaSyAsbWxRTtqjggbWXxjy7Q8kdNX6KqacAx8",
-  authDomain: "track-4dd74.firebaseapp.com",
-  projectId: "track-4dd74",
-  storageBucket: "track-4dd74.firebasestorage.app",
-  messagingSenderId: "845954004780",
-  appId: "1:845954004780:web:68936cfb6032ee2bb75e89",
-  measurementId: "G-PQBHW38NC8"
-};
-        
-        // Initialize Firebase
+            apiKey: "AIzaSyAsbWxRTtqjggbWXxjy7Q8kdNX6KqacAx8",
+            authDomain: "track-4dd74.firebaseapp.com",
+            projectId: "track-4dd74",
+            storageBucket: "track-4dd74.appspot.com",
+            messagingSenderId: "845954004780",
+            appId: "1:845954004780:web:68936cfb6032ee2bb75e89",
+            measurementId: "G-PQBHW38NC8"
+        };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
         const conferencesRef = db.collection('conferences');
-        
-        // Initialize with empty conference list
         let conferences = [];
         let editConferenceId = null;
         let userCompleted = JSON.parse(localStorage.getItem('userCompleted')) || {};
-        
-        // DOM Elements
         const conferenceGrid = document.getElementById('conference-grid');
         const homeConferenceGrid = document.getElementById('home-conference-grid');
         const conferenceForm = document.getElementById('conferenceForm');
@@ -1143,19 +1141,13 @@
         const searchBtn = document.getElementById('search-btn');
         const saveNotificationsBtn = document.getElementById('save-notifications');
         const permissionStatus = document.getElementById('notification-permission-status');
-        
-        // Navigation elements
         const navLinks = document.querySelectorAll('nav a, .footer-links a');
         const sectionContents = document.querySelectorAll('.section-content');
-        
-        // Format date for display
         function formatDate(dateString) {
             if (!dateString) return "N/A";
             const options = { year: 'numeric', month: 'short', day: 'numeric' };
             return new Date(dateString).toLocaleDateString('en-US', options);
         }
-        
-        // Check if deadline has passed
         function isDeadlinePassed(conference) {
             if (!conference.submissionDeadline) return false;
             const today = new Date();
@@ -1164,85 +1156,70 @@
             deadline.setHours(0, 0, 0, 0);
             return deadline < today;
         }
-        
-        // Show toast notification
         function showToast(message, isError = false) {
             toastMessage.textContent = message;
             toast.classList.remove('error');
-            
-            if (isError) {
-                toast.classList.add('error');
-            }
-            
+            if (isError) toast.classList.add('error');
             toast.classList.add('show');
-            
             setTimeout(() => {
                 toast.classList.remove('show');
             }, 3000);
         }
-        
-        // Generate conference card HTML
         function generateConferenceCard(conference, isHome = false) {
             const completed = userCompleted[conference.id] || false;
             const daysLeft = completed ? 0 : Math.ceil((new Date(conference.submissionDeadline) - new Date()) / (1000 * 60 * 60 * 24));
-            
+            let daysClass = '';
+            if (completed) {
+                daysClass = 'completed';
+            } else if (daysLeft <= 3) {
+                daysClass = 'urgent';
+            } else if (daysLeft <= 10) {
+                daysClass = 'warning';
+            } else {
+                daysClass = 'safe';
+            }
             return `
                 <div class="conference-card ${completed ? 'completed' : ''}">
                     <div class="card-header">
                         <h3>${conference.name}</h3>
-                        ${conference.additionalInfo ? `
-                        <div class="conference-additional">${conference.additionalInfo}</div>
-                        ` : ''}
-                        <span class="conference-status ${completed ? 'completed' : ''}">
+                        ${conference.additionalInfo ? `<div class="conference-additional">${conference.additionalInfo}</div>` : ''}
+                        <span class="conference-status ${completed ? 'completed' : ''} deadline-value ${daysClass}">
                             ${completed ? 'Marked Complete' : (daysLeft > 0 ? `${daysLeft} days left` : 'Deadline passed')}
                         </span>
                     </div>
                     <div class="card-body">
                         <div class="deadline-item">
-                            <span class="deadline-label">Deadline:</span>
-                            <span class="deadline-value">
-                                ${formatDate(conference.submissionDeadline)}
-                            </span>
+                            <span class="deadline-label">Submission Deadline:</span>
+                            <span class="deadline-value">${formatDate(conference.submissionDeadline)}</span>
                         </div>
-                        ${conference.conferenceDate ? `
                         <div class="deadline-item">
                             <span class="deadline-label">Conference Date:</span>
                             <span class="deadline-value">${formatDate(conference.conferenceDate)}</span>
                         </div>
-                        ` : ''}
-                        ${conference.location ? `
                         <div class="deadline-item">
                             <span class="deadline-label">Location:</span>
-                            <span class="deadline-value">${conference.location}</span>
+                            <span class="deadline-value">${conference.location || ''}</span>
                         </div>
-                        ` : ''}
-                        ${conference.travelGrant ? `
                         <div class="deadline-item">
                             <span class="deadline-label">Travel Grant:</span>
-                            <span class="deadline-value">${conference.travelGrant}</span>
+                            <span class="deadline-value">${conference.travelGrant || ''}</span>
                         </div>
-                        ` : ''}
                         <div class="deadline-item">
-                            <span class="deadline-label">Submitted by:</span>
-                            <span class="deadline-value">${conference.submittedBy || 'HAHAHA'}</span>
+                            <span class="deadline-label">Submitted By:</span>
+                            <span class="deadline-value">${conference.submittedBy || ''}</span>
                         </div>
                     </div>
                     <div class="card-footer">
                         <div class="link-group">
-                            ${conference.registrationUrl ? `
-                            <a href="${conference.registrationUrl}" target="_blank">
-                                <i class="fas fa-user-check"></i> Register
-                            </a>
-                            ` : ''}
-                            ${conference.website ? `
-                            <a href="${conference.website}" target="_blank">
-                                <i class="fas fa-globe"></i> Website
-                            </a>
-                            ` : ''}
+                            ${conference.registrationUrl ? `<a href="${conference.registrationUrl}" target="_blank"><i class="fas fa-link"></i> Registration</a>` : ''}
+                            ${conference.website ? `<a href="${conference.website}" target="_blank"><i class="fas fa-globe"></i> Website</a>` : ''}
                         </div>
                         <div class="action-group">
                             <button class="action-btn mark-completed" data-id="${conference.id}">
                                 <i class="fas fa-check-circle"></i> ${completed ? 'Reopen' : 'Mark Done'}
+                            </button>
+                            <button class="action-btn copy-btn" data-id="${conference.id}">
+                                <i class="fas fa-copy"></i> Copy Info
                             </button>
                             ${!isHome ? `
                             <button class="action-btn edit-btn" data-id="${conference.id}">
@@ -1257,151 +1234,115 @@
                 </div>
             `;
         }
-        
-        // Render conferences to the grid
         function renderConferences(filter = 'all', searchQuery = '') {
             conferenceGrid.innerHTML = '';
-            
-            if (conferences.length === 0) {
-                conferenceGrid.innerHTML = `
-                    <div style="text-align: center; padding: 3rem; background: white; border-radius: var(--border-radius); box-shadow: var(--shadow);">
-                        <i class="fas fa-calendar-times" style="font-size: 3rem; color: var(--gray); margin-bottom: 1rem;"></i>
-                        <h3>No conferences found</h3>
-                        <p>Be the first to add a conference!</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            // Filter conferences
             const today = new Date();
             today.setHours(0, 0, 0, 0);
-            
             const filteredConferences = conferences.filter(conf => {
                 const completed = userCompleted[conf.id] || false;
-                
-                // Apply search filter
                 if (searchQuery) {
                     const searchLower = searchQuery.toLowerCase();
-                    if (!conf.name.toLowerCase().includes(searchLower)) {
-                        return false;
-                    }
+                    if (!conf.name.toLowerCase().includes(searchLower)) return false;
                 }
-                
                 if (filter === 'completed') return completed;
                 if (filter === 'all') return true;
                 if (completed) return false;
-                
                 if (!conf.submissionDeadline) return false;
                 const deadline = new Date(conf.submissionDeadline);
                 deadline.setHours(0, 0, 0, 0);
-                
                 const diffTime = deadline - today;
                 const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                
-                if (filter === 'grants') {
-                    return conf.travelGrant && conf.travelGrant.length > 0;
-                }
-                
+                if (filter === 'grants') return conf.travelGrant && conf.travelGrant.length > 0;
                 if (filter === 'month') {
-                    const nextMonth = new Date();
-                    nextMonth.setMonth(nextMonth.getMonth() + 1);
-                    
-                    return deadline.getMonth() === today.getMonth() && 
-                           deadline.getFullYear() === today.getFullYear() &&
-                           diffDays >= 0;
+                    return deadline.getMonth() === today.getMonth() &&
+                        deadline.getFullYear() === today.getFullYear() &&
+                        diffDays >= 0;
                 }
-                
-                if (filter === '30days') {
-                    return diffDays >= 0 && diffDays <= 30;
-                }
-                
+                if (filter === '30days') return diffDays >= 0 && diffDays <= 30;
                 return true;
             });
-            
-            // Sort conferences by deadline
-            filteredConferences.sort((a, b) => 
+            filteredConferences.sort((a, b) =>
                 new Date(a.submissionDeadline) - new Date(b.submissionDeadline)
             );
-            
             filteredConferences.forEach(conference => {
                 conferenceGrid.innerHTML += generateConferenceCard(conference);
             });
-            
-            // Update stats
             updateStats();
-            
-            // Add event listeners
             addEventListeners();
         }
-        
-        // Render home conferences (3 most recent)
         function renderHomeConferences() {
             homeConferenceGrid.innerHTML = '';
-            
-            // Get upcoming conferences (not completed and not deadline passed)
-            const upcoming = conferences.filter(c => !userCompleted[c.id] && !isDeadlinePassed(c));
-            
-            if (upcoming.length === 0) {
-                homeConferenceGrid.innerHTML = `
-                    <div style="text-align: center; padding: 2rem; background: white; border-radius: var(--border-radius); box-shadow: var(--shadow);">
-                        <i class="fas fa-calendar-plus" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
-                        <h3>No upcoming conferences</h3>
-                        <p>Add a conference to get started</p>
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const upcomingDeadlines = conferences.filter(c =>
+                !userCompleted[c.id] &&
+                c.submissionDeadline &&
+                new Date(c.submissionDeadline) >= today
+            ).sort((a, b) => new Date(a.submissionDeadline) - new Date(b.submissionDeadline));
+            const upcomingConfs = conferences.filter(c =>
+                !userCompleted[c.id] &&
+                c.conferenceDate &&
+                new Date(c.conferenceDate) >= today
+            ).sort((a, b) => new Date(a.conferenceDate) - new Date(b.conferenceDate));
+            let html = '';
+            html += `<h3 style="margin-bottom:0.5rem;">Upcoming Application Deadlines</h3>`;
+            if (upcomingDeadlines.length === 0) {
+                html += `
+                    <div style="text-align: center; padding: 1.5rem; background: white; border-radius: var(--border-radius); box-shadow: var(--shadow); margin-bottom:1.5rem;">
+                    <i class="fas fa-calendar-plus" style="font-size: 2rem; color: var(--primary); margin-bottom: 0.5rem;"></i>
+                    <div>No upcoming application deadlines</div>
                     </div>
                 `;
-                return;
+            } else {
+                upcomingDeadlines.slice(0, 3).forEach(conference => {
+                    html += generateConferenceCard(conference, true);
+                });
             }
-            
-            // Sort by most recently added (using timestamp)
-            const recent = [...upcoming].sort((a, b) => b.timestamp - a.timestamp).slice(0, 3);
-            
-            recent.forEach(conference => {
-                homeConferenceGrid.innerHTML += generateConferenceCard(conference, true);
-            });
-            
-            // Add event listeners
-            addEventListeners();
+            html += `<h3 style="margin:1.5rem 0 0.5rem;">Upcoming Conferences</h3>`;
+            if (upcomingConfs.length === 0) {
+                html += `
+                    <div style="text-align: center; padding: 1.5rem; background: white; border-radius: var(--border-radius); box-shadow: var(--shadow);">
+                    <i class="fas fa-calendar-check" style="font-size: 2rem; color: var(--gray); margin-bottom: 0.5rem;"></i>
+                    <div>No upcoming conferences</div>
+                    </div>
+                `;
+            } else {
+                upcomingConfs.slice(0, 3).forEach(conference => {
+                    html += generateConferenceCard(conference, true);
+                });
+            }
+            homeConferenceGrid.innerHTML = html;
         }
-        
-        // Update stats counters
         function updateStats() {
-            const upcoming = conferences.filter(c => !userCompleted[c.id] && !isDeadlinePassed(c));
-            upcomingCount.textContent = upcoming.length;
-            
-            const grants = upcoming.filter(c => c.travelGrant && c.travelGrant.length > 0).length;
-            grantsCount.textContent = grants;
-            
-            const urgent = upcoming.filter(c => {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const upcoming = conferences.filter(c => !userCompleted[c.id] && c.submissionDeadline && new Date(c.submissionDeadline) >= today).length;
+            const grants = conferences.filter(c => !userCompleted[c.id] && c.travelGrant && c.travelGrant.length > 0).length;
+            const urgent = conferences.filter(c => {
+                if (userCompleted[c.id]) return false;
                 if (!c.submissionDeadline) return false;
-                const today = new Date();
                 const deadline = new Date(c.submissionDeadline);
-                const diffTime = deadline - today;
-                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                deadline.setHours(0, 0, 0, 0);
+                const diffDays = Math.ceil((deadline - today) / (1000 * 60 * 60 * 24));
                 return diffDays > 0 && diffDays <= 30;
             }).length;
+            upcomingCount.textContent = upcoming;
+            grantsCount.textContent = grants;
             urgentCount.textContent = urgent;
         }
-        
-        // Add event listeners to conference actions
         function addEventListeners() {
             document.querySelectorAll('.mark-completed').forEach(btn => {
                 btn.addEventListener('click', function(e) {
                     e.preventDefault();
                     const id = this.getAttribute('data-id');
-                    
-                    // Toggle completion status
                     userCompleted[id] = !userCompleted[id];
                     localStorage.setItem('userCompleted', JSON.stringify(userCompleted));
-                    
                     const activeTab = document.querySelector('.tab-btn.active')?.getAttribute('data-filter') || 'all';
                     renderConferences(activeTab, searchInput.value);
                     renderHomeConferences();
-                    
                     showToast(userCompleted[id] ? 'Conference marked as completed' : 'Conference reopened');
                 });
             });
-            
             document.querySelectorAll('.edit-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const id = this.getAttribute('data-id');
@@ -1416,12 +1357,11 @@
                         document.getElementById('conferenceLocation').value = conference.location || '';
                         document.getElementById('travelGrant').value = conference.travelGrant || '';
                         document.getElementById('additionalInfo').value = conference.additionalInfo || '';
-                        
+                        document.getElementById('submittedBy').value = conference.submittedBy || '';
                         showSection('submit');
                     }
                 });
             });
-            
             document.querySelectorAll('.delete-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const id = this.getAttribute('data-id');
@@ -1436,27 +1376,47 @@
                     }
                 });
             });
+            document.querySelectorAll('.copy-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    const conf = conferences.find(c => c.id === id);
+                    if (conf) {
+                        const info =
+`Conference: ${conf.name}
+Deadline: ${formatDate(conf.submissionDeadline)}
+Conference Date: ${formatDate(conf.conferenceDate)}
+Location: ${conf.location || ''}
+Registration: ${conf.registrationUrl || ''}
+Website: ${conf.website || ''}
+Travel Grant: ${conf.travelGrant || ''}
+Submitted By: ${conf.submittedBy || ''}
+${conf.additionalInfo ? 'Info: ' + conf.additionalInfo : ''}`;
+                        navigator.clipboard.writeText(info);
+                        showToast('Conference info copied!');
+                    }
+                });
+            });
         }
-        
-        // Handle form submission
         function handleFormSubmit(e) {
             e.preventDefault();
-            
+            function normalizeUrl(url) {
+                if (!url) return '';
+                if (/^https?:\/\//i.test(url)) return url;
+                return 'https://' + url;
+            }
             const newConference = {
                 name: document.getElementById('conferenceName').value,
-                registrationUrl: document.getElementById('registrationUrl').value,
-                website: document.getElementById('conferenceWebsite').value || '',
+                registrationUrl: normalizeUrl(document.getElementById('registrationUrl').value),
+                website: normalizeUrl(document.getElementById('conferenceWebsite').value),
                 submissionDeadline: document.getElementById('submissionDeadline').value,
                 conferenceDate: document.getElementById('conferenceDate').value || '',
                 location: document.getElementById('conferenceLocation').value || '',
                 travelGrant: document.getElementById('travelGrant').value || '',
                 additionalInfo: document.getElementById('additionalInfo').value || '',
-                submittedBy: "HAHAHA",
+                submittedBy: document.getElementById('submittedBy')?.value || "HAHAHA",
                 timestamp: Date.now()
             };
-            
             if (editConferenceId) {
-                // Update existing conference
                 conferencesRef.doc(editConferenceId).update(newConference)
                     .then(() => {
                         showToast('Conference updated successfully!');
@@ -1465,7 +1425,6 @@
                         showToast('Error updating conference: ' + error.message, true);
                     });
             } else {
-                // Add new conference
                 conferencesRef.add(newConference)
                     .then(() => {
                         showToast('Conference added successfully!');
@@ -1474,44 +1433,28 @@
                         showToast('Error adding conference: ' + error.message, true);
                     });
             }
-            
-            // Reset form
             conferenceForm.reset();
             editConferenceId = null;
-            
-            // Switch to conferences view
             showSection('conferences');
         }
-        
-        // Show a specific section
         function showSection(sectionId) {
-            // Hide all sections
             sectionContents.forEach(section => {
                 section.style.display = 'none';
             });
-            
-            // Show the requested section
             document.getElementById(`${sectionId}-section`).style.display = 'block';
-            
-            // Update active nav link
             navLinks.forEach(link => {
                 link.classList.remove('active');
                 if (link.getAttribute('data-section') === sectionId) {
                     link.classList.add('active');
                 }
             });
-            
-            // Special handling for certain sections
             if (sectionId === 'conferences') {
                 const activeTab = document.querySelector('.tab-btn.active')?.getAttribute('data-filter') || 'all';
                 renderConferences(activeTab, searchInput.value);
             } else if (sectionId === 'home') {
                 renderHomeConferences();
             } else if (sectionId === 'notifications') {
-                // Update permission status
                 updatePermissionStatus();
-                
-                // Request notification permission
                 if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
                     Notification.requestPermission().then(permission => {
                         updatePermissionStatus();
@@ -1522,13 +1465,10 @@
                 }
             }
         }
-        
-        // Update notification permission status display
         function updatePermissionStatus() {
             const status = Notification.permission;
             let statusText = "";
-            
-            switch(status) {
+            switch (status) {
                 case 'granted':
                     statusText = "Notification permission: Granted ✅";
                     break;
@@ -1538,13 +1478,9 @@
                 default:
                     statusText = "Notification permission: Not requested yet";
             }
-            
             permissionStatus.textContent = statusText;
         }
-        
-        // Initialize the application
         function initApp() {
-            // Set up navigation
             navLinks.forEach(link => {
                 link.addEventListener('click', (e) => {
                     e.preventDefault();
@@ -1552,56 +1488,41 @@
                     showSection(section);
                 });
             });
-            
-            // Set up tab buttons
             document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
+                btn.addEventListener('click', function () {
                     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
                     this.classList.add('active');
                     renderConferences(this.getAttribute('data-filter'), searchInput.value);
                 });
             });
-            
-            // Form submission
             conferenceForm.addEventListener('submit', handleFormSubmit);
-            
-            // Submit button in hero section
             document.getElementById('submit-btn').addEventListener('click', () => {
                 conferenceForm.reset();
                 editConferenceId = null;
                 showSection('submit');
             });
-            
-            // Cancel button
             document.getElementById('cancel-btn').addEventListener('click', () => {
                 conferenceForm.reset();
                 editConferenceId = null;
                 showSection('conferences');
             });
-            
-            // FAB button
             fab.addEventListener('click', () => {
                 conferenceForm.reset();
                 editConferenceId = null;
                 showSection('submit');
             });
-            
-            // Search functionality
             searchBtn.addEventListener('click', () => {
                 const activeTab = document.querySelector('.tab-btn.active')?.getAttribute('data-filter') || 'all';
                 renderConferences(activeTab, searchInput.value);
             });
-            
             searchInput.addEventListener('keyup', (e) => {
                 if (e.key === 'Enter') {
                     const activeTab = document.querySelector('.tab-btn.active')?.getAttribute('data-filter') || 'all';
                     renderConferences(activeTab, searchInput.value);
                 }
             });
-            
-            // Notification switch changes
             document.querySelectorAll('.switch input').forEach(switchInput => {
-                switchInput.addEventListener('change', function() {
+                switchInput.addEventListener('change', function () {
                     const settings = {
                         notify7days: document.getElementById('notify-7days').checked,
                         notify3days: document.getElementById('notify-3days').checked,
@@ -1612,8 +1533,6 @@
                     localStorage.setItem('notificationSettings', JSON.stringify(settings));
                 });
             });
-            
-            // Save notification settings button
             saveNotificationsBtn.addEventListener('click', () => {
                 const settings = {
                     notify7days: document.getElementById('notify-7days').checked,
@@ -1622,12 +1541,9 @@
                     notifyDay: document.getElementById('notify-day').checked,
                     travelNotify: document.getElementById('travel-notify').checked
                 };
-                
                 localStorage.setItem('notificationSettings', JSON.stringify(settings));
                 showToast('Notification settings saved!');
             });
-            
-            // Load notification settings
             const savedSettings = JSON.parse(localStorage.getItem('notificationSettings'));
             if (savedSettings) {
                 document.getElementById('notify-7days').checked = savedSettings.notify7days;
@@ -1636,15 +1552,11 @@
                 document.getElementById('notify-day').checked = savedSettings.notifyDay;
                 document.getElementById('travel-notify').checked = savedSettings.travelNotify;
             }
-            
-            // Set up Firestore listener
             conferencesRef.orderBy('timestamp', 'desc').onSnapshot(snapshot => {
                 conferences = [];
                 snapshot.forEach(doc => {
                     conferences.push({ id: doc.id, ...doc.data() });
                 });
-                
-                // Update UI
                 const activeSection = document.querySelector('.section-content[style="display:block"]')?.id;
                 if (activeSection === 'home-section') {
                     renderHomeConferences();
@@ -1656,361 +1568,51 @@
             }, error => {
                 showToast('Error loading conferences: ' + error.message, true);
             });
-            
-            // Show home section by default
             showSection('home');
-            
-            // Check for upcoming deadlines every hour
             setInterval(checkDeadlines, 3600000);
             checkDeadlines();
         }
-        
-        // Check deadlines and show notifications
         function checkDeadlines() {
             if (Notification.permission !== 'granted') return;
-
             const today = new Date();
             today.setHours(0, 0, 0, 0);
-
-            // Load notification settings
             const settings = JSON.parse(localStorage.getItem('notificationSettings')) || {};
-
             conferences.forEach(conf => {
-            if (!conf.submissionDeadline) return;
-
-            const deadline = new Date(conf.submissionDeadline);
-            deadline.setHours(0, 0, 0, 0);
-
-            const diffTime = deadline - today;
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-            // Skip if user has completed this conference
-            if (userCompleted[conf.id]) return;
-
-            // Check if we should notify based on settings
-            if ((diffDays === 7 && settings.notify7days) || 
-                (diffDays === 3 && settings.notify3days) || 
-                (diffDays === 1 && settings.notify1day) ||
-                (diffDays === 0 && settings.notifyDay)) {
-
-                new Notification(`IEEE Deadline Approaching: ${conf.name}`, {
-                body: `Submission deadline is in ${diffDays} day${diffDays > 1 ? 's' : ''} (${formatDate(conf.submissionDeadline)})`,
-                icon: 'https://cdn-icons-png.flaticon.com/512/3063/3063188.png'
-                });
-            }
+                if (!conf.submissionDeadline) return;
+                const deadline = new Date(conf.submissionDeadline);
+                deadline.setHours(0, 0, 0, 0);
+                const diffTime = deadline - today;
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                if (userCompleted[conf.id]) return;
+                if ((diffDays === 7 && settings.notify7days) ||
+                    (diffDays === 3 && settings.notify3days) ||
+                    (diffDays === 1 && settings.notify1day) ||
+                    (diffDays === 0 && settings.notifyDay)) {
+                    new Notification(`IEEE Deadline Approaching: ${conf.name}`, {
+                        body: `Submission deadline is in ${diffDays} day${diffDays > 1 ? 's' : ''} (${formatDate(conf.submissionDeadline)})`,
+                        icon: 'https://cdn-icons-png.flaticon.com/512/3063/3063188.png'
+                    });
+                }
             });
         }
-
-        // --- Customizations for your requests ---
-
-        // 1. Add favicon (inject into head if not present)
-        (function addFavicon() {
-            if (!document.querySelector('link[rel="icon"]')) {
-            const link = document.createElement('link');
-            link.rel = 'icon';
-            link.type = 'image/png';
-            link.href = 'https://cdn-icons-png.flaticon.com/512/3063/3063188.png';
-            document.head.appendChild(link);
+        // Modern dark mode toggle logic
+        (function setupDarkMode() {
+            const btn = document.getElementById('dark-toggle-btn');
+            function setDarkMode(on) {
+                if (on) {
+                    document.body.classList.add('dark-mode');
+                    localStorage.setItem('darkMode', '1');
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    localStorage.setItem('darkMode', '0');
+                }
             }
-        })();
-
-        // 2. Home page: show upcoming application deadlines and upcoming conferences separately
-        function renderHomeConferences() {
-            homeConferenceGrid.innerHTML = '';
-
-            // Upcoming application deadlines (pending, not completed, deadline in future)
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-
-            const upcomingDeadlines = conferences.filter(c =>
-            !userCompleted[c.id] &&
-            c.submissionDeadline &&
-            new Date(c.submissionDeadline) >= today
-            ).sort((a, b) => new Date(a.submissionDeadline) - new Date(b.submissionDeadline)).slice(0, 3);
-
-            // Upcoming conferences (conferenceDate in future, not completed)
-            const upcomingConfs = conferences.filter(c =>
-            !userCompleted[c.id] &&
-            c.conferenceDate &&
-            new Date(c.conferenceDate) >= today
-            ).sort((a, b) => new Date(a.conferenceDate) - new Date(b.conferenceDate)).slice(0, 3);
-
-            let html = '';
-
-            // Upcoming Application Deadlines
-            html += `<h3 style="margin-bottom:0.5rem;">Upcoming Application Deadlines</h3>`;
-            if (upcomingDeadlines.length === 0) {
-            html += `
-                <div style="text-align: center; padding: 1.5rem; background: white; border-radius: var(--border-radius); box-shadow: var(--shadow); margin-bottom:1.5rem;">
-                <i class="fas fa-calendar-plus" style="font-size: 2rem; color: var(--primary); margin-bottom: 0.5rem;"></i>
-                <div>No upcoming application deadlines</div>
-                </div>
-            `;
-            } else {
-            upcomingDeadlines.forEach(conference => {
-                html += generateConferenceCard(conference, true);
-            });
-            }
-
-            // Upcoming Conferences
-            html += `<h3 style="margin:1.5rem 0 0.5rem;">Upcoming Conferences</h3>`;
-            if (upcomingConfs.length === 0) {
-            html += `
-                <div style="text-align: center; padding: 1.5rem; background: white; border-radius: var(--border-radius); box-shadow: var(--shadow);">
-                <i class="fas fa-calendar" style="font-size: 2rem; color: var(--primary); margin-bottom: 0.5rem;"></i>
-                <div>No upcoming conferences</div>
-                </div>
-            `;
-            } else {
-            upcomingConfs.forEach(conference => {
-                html += generateConferenceCard(conference, true);
-            });
-            }
-
-            homeConferenceGrid.innerHTML = html;
-            addEventListeners();
-        }
-
-        // 3. Make home stats cards clickable as filter buttons
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.stat-card').forEach((card, idx) => {
-            card.style.cursor = 'pointer';
-            card.addEventListener('click', function() {
-                showSection('conferences');
-                // 0: Upcoming, 1: Grants, 2: Urgent
-                let tab = 'all';
-                if (idx === 1) tab = 'grants';
-                if (idx === 2) tab = '30days';
-                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                document.querySelector(`.tab-btn[data-filter="${tab}"]`).classList.add('active');
-                renderConferences(tab, searchInput.value);
-            });
-            });
-        });
-
-        // 4. Add "Submitted By" input field (optional) in the form
-        (function addSubmittedByField() {
-            const form = document.getElementById('conferenceForm');
-            if (!document.getElementById('submittedBy')) {
-            const group = document.createElement('div');
-            group.className = 'form-group';
-            group.innerHTML = `
-                <label for="submittedBy">Submitted By (Optional)</label>
-                <input type="text" id="submittedBy" class="form-control" placeholder="Your name (optional)">
-            `;
-            // Insert before the last form-row (buttons)
-            const rows = form.querySelectorAll('.form-row');
-            form.insertBefore(group, rows[rows.length - 1]);
-            }
-        })();
-
-        // 5. In form submission, use user input for "Submitted By" if provided
-        function handleFormSubmit(e) {
-            e.preventDefault();
-
-            // Accept URLs without https/http
-            function normalizeUrl(url) {
-            if (!url) return '';
-            if (/^https?:\/\//i.test(url)) return url;
-            return 'https://' + url;
-            }
-
-            const newConference = {
-            name: document.getElementById('conferenceName').value,
-            registrationUrl: normalizeUrl(document.getElementById('registrationUrl').value),
-            website: normalizeUrl(document.getElementById('conferenceWebsite').value),
-            submissionDeadline: document.getElementById('submissionDeadline').value,
-            conferenceDate: document.getElementById('conferenceDate').value || '',
-            location: document.getElementById('conferenceLocation').value || '',
-            travelGrant: document.getElementById('travelGrant').value || '',
-            additionalInfo: document.getElementById('additionalInfo').value || '',
-            submittedBy: document.getElementById('submittedBy')?.value || "HAHAHA",
-            timestamp: Date.now()
+            setDarkMode(localStorage.getItem('darkMode') === '1');
+            btn.onclick = function () {
+                setDarkMode(!document.body.classList.contains('dark-mode'));
             };
-
-            if (editConferenceId) {
-            conferencesRef.doc(editConferenceId).update(newConference)
-                .then(() => {
-                showToast('Conference updated successfully!');
-                })
-                .catch(error => {
-                showToast('Error updating conference: ' + error.message, true);
-                });
-            } else {
-            conferencesRef.add(newConference)
-                .then(() => {
-                showToast('Conference added successfully!');
-                })
-                .catch(error => {
-                showToast('Error adding conference: ' + error.message, true);
-                });
-            }
-
-            conferenceForm.reset();
-            editConferenceId = null;
-            showSection('conferences');
-        }
-
-        // --- PWA Support: Allow install as app ---
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-            navigator.serviceWorker.register('sw.js').catch(() => {});
-            });
-        }
-        // Service Worker registration for PWA
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js').catch(() => {});
-        }
-
-        // Show install prompt if available
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            // Add install button if not present
-            if (!document.getElementById('install-app-btn')) {
-            const btn = document.createElement('button');
-            btn.id = 'install-app-btn';
-            btn.className = 'btn';
-            btn.style.position = 'fixed';
-            btn.style.bottom = '100px';
-            btn.style.right = '30px';
-            btn.style.zIndex = 2000;
-            btn.innerHTML = '<i class="fas fa-download"></i> Install App';
-            btn.onclick = function() {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then(() => {
-                btn.remove();
-                });
-            };
-            document.body.appendChild(btn);
-            }
-        });
-
-        // Add manifest link for PWA
-        (function addManifest() {
-            if (!document.querySelector('link[rel="manifest"]')) {
-            const link = document.createElement('link');
-            link.rel = 'manifest';
-            link.href = 'manifest.json';
-            document.head.appendChild(link);
-            }
         })();
-        /*
-        1. Fix logic for Upcoming Deadlines and Upcoming Conferences on home page:
-            - Upcoming Deadlines: show conferences where submissionDeadline is in the future and not completed.
-            - Upcoming Conferences: show conferences where conferenceDate is in the future and not completed, and submissionDeadline is in the past or not present.
-            - Each conference should appear in only one section.
-        */
-        function renderHomeConferences() {
-             homeConferenceGrid.innerHTML = '';
-
-             const today = new Date();
-             today.setHours(0, 0, 0, 0);
-
-             // Upcoming Deadlines: submissionDeadline in future, not completed
-             const upcomingDeadlines = conferences.filter(c =>
-                  !userCompleted[c.id] &&
-                  c.submissionDeadline &&
-                  new Date(c.submissionDeadline) >= today
-             ).sort((a, b) => new Date(a.submissionDeadline) - new Date(b.submissionDeadline));
-
-             // IDs of conferences already shown in deadlines
-             const deadlineIds = new Set(upcomingDeadlines.map(c => c.id));
-
-             // Upcoming Conferences: conferenceDate in future, not completed, and not in upcomingDeadlines
-             const upcomingConfs = conferences.filter(c =>
-                  !userCompleted[c.id] &&
-                  c.conferenceDate &&
-                  new Date(c.conferenceDate) >= today &&
-                  (!c.submissionDeadline || new Date(c.submissionDeadline) < today) &&
-                  !deadlineIds.has(c.id)
-             ).sort((a, b) => new Date(a.conferenceDate) - new Date(b.conferenceDate));
-
-             let html = '';
-
-             // Upcoming Application Deadlines
-             html += `<h3 style="margin-bottom:0.5rem;">Upcoming Application Deadlines</h3>`;
-             if (upcomingDeadlines.length === 0) {
-                  html += `
-                        <div style="text-align: center; padding: 1.5rem; background: white; border-radius: var(--border-radius); box-shadow: var(--shadow); margin-bottom:1.5rem;">
-                             <i class="fas fa-calendar-plus" style="font-size: 2rem; color: var(--primary); margin-bottom: 0.5rem;"></i>
-                             <div>No upcoming application deadlines</div>
-                        </div>
-                  `;
-             } else {
-                  upcomingDeadlines.slice(0, 3).forEach(conference => {
-                        html += generateConferenceCard(conference, true);
-                  });
-             }
-
-             // Upcoming Conferences
-             html += `<h3 style="margin:1.5rem 0 0.5rem;">Upcoming Conferences</h3>`;
-             if (upcomingConfs.length === 0) {
-                  html += `
-                        <div style="text-align: center; padding: 1.5rem; background: white; border-radius: var(--border-radius); box-shadow: var(--shadow);">
-                             <i class="fas fa-calendar" style="font-size: 2rem; color: var(--primary); margin-bottom: 0.5rem;"></i>
-                             <div>No upcoming conferences</div>
-                        </div>
-                  `;
-             } else {
-                  upcomingConfs.slice(0, 3).forEach(conference => {
-                        html += generateConferenceCard(conference, true);
-                  });
-             }
-
-             homeConferenceGrid.innerHTML = html;
-             addEventListeners();
-        }
-
-        /*
-        2. On phone devices, keep menu options in one line (no wrapping).
-            - Update CSS for nav ul and .footer-links for small screens.
-        */
-        const style = document.createElement('style');
-        style.innerHTML = `
-        @media (max-width: 480px) {
-             nav ul, .footer-links {
-                  flex-wrap: nowrap !important;
-                  overflow-x: auto;
-                  white-space: nowrap;
-                  justify-content: flex-start !important;
-                  width: 100%;
-                  margin-top: 0 !important;
-             }
-             nav ul li, .footer-links li {
-                  flex: 0 0 auto;
-             }
-        }
-        `;
-        document.head.appendChild(style);
-
-        /*
-        3. Move "Created by Venkatesh" signature to footer, remove fixed position.
-            - Remove .HAHAHA-signature from DOM and add to footer.
-        */
-        document.addEventListener('DOMContentLoaded', function() {
-             // Remove floating signature if present
-             const sig = document.querySelector('.HAHAHA-signature');
-             if (sig) sig.parentNode.removeChild(sig);
-
-             // Add to footer if not already present
-             const footer = document.querySelector('.footer-content');
-             if (footer && !footer.querySelector('.HAHAHA-signature-footer')) {
-                  const div = document.createElement('div');
-                  div.className = 'HAHAHA-signature-footer';
-                  div.style.marginTop = '1.5rem';
-                  div.style.display = 'flex';
-                  div.style.justifyContent = 'center';
-                  div.style.alignItems = 'center';
-                  div.style.gap = '8px';
-                  div.innerHTML = `<i class="fas fa-crown" style="color:var(--primary);"></i>
-                        <span style="font-weight:600;color:var(--primary);">⚡Created by Venkatesh - The Best in World⚡</span>`;
-                  footer.appendChild(div);
-             }
-        });
-        // Initialize when DOM is loaded
         document.addEventListener('DOMContentLoaded', initApp);
-    </script>
+    </script>   
 </body>
 </html>
